@@ -850,6 +850,15 @@ async function loadProfile() {
   if (!sb || !currentUser) return;
   const { data } = await sb.from('parejas').select('*').eq('user_id', currentUser.id).single();
   currentProfile = data;
+  // Update avatar and profile info immediately after loading
+  if (currentProfile) {
+    const n1 = currentProfile.nombre1 || '';
+    const n2 = currentProfile.nombre2 || '';
+    const city = currentProfile.ciudad || '';
+    document.getElementById('profileName').textContent = n2 ? `${n1} & ${n2}` : n1;
+    document.getElementById('profileSub').textContent = `${city} · Swinger lifestyle`;
+    updateProfileAvatar();
+  }
 }
 
 // ============================================================
